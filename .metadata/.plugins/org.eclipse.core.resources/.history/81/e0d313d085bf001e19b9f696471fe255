@@ -1,0 +1,25 @@
+package com.cascade;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+import com.hibernate.Student;
+
+public class CasccadeExample {
+
+	public static void main(String[] args) {
+
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+
+		Session s1 = factory.openSession();
+
+		
+		s1.close();
+
+		factory.close();
+	}
+}

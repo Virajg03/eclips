@@ -1,0 +1,24 @@
+package com.cascade;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import com.map.otm.Que;
+import com.map.oto.Question;
+
+public class CasccadeExample {
+
+	public static void main(String[] args) {
+
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+
+		Session s1 = factory.openSession();
+
+	Que q1  =  new Que();
+		
+		s1.close();
+
+		factory.close();
+	}
+}

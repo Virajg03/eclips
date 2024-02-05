@@ -1,0 +1,29 @@
+package com.cascade;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import com.map.otm.Ans;
+import com.map.otm.Que;
+
+public class CasccadeExample {
+
+	public static void main(String[] args) {
+
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+
+		Session s1 = factory.openSession();
+
+		Que q1 = new Que();
+
+		q1.setQuestionId(126);
+		q1.setQuestion("what is hibernate?");
+
+		Ans a1 = new Ans(456, "hibernate is  easy for data management", "hrdtgrffd");
+
+		s1.close();
+
+		factory.close();
+	}
+}

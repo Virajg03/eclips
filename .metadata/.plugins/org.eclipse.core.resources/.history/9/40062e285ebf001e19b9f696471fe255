@@ -1,0 +1,68 @@
+package com.hql;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+import com.hibernate.Student;
+
+public class HQLExample {
+
+	public static void main(String[] args) {
+
+		Configuration c1 = new Configuration();
+		c1.configure("hibernate.cfg.xml");
+		SessionFactory factory = c1.buildSessionFactory();
+
+		Session s = factory.openSession();
+
+		// HQL
+
+//		String query = "from Student where city='ahmedabad'";
+		String query = "from Student as s where s.city=:x and s.name=:n";
+
+		Query q = s.createQuery(query);
+
+		q.setParameter("x", "ahmedabad");
+		q.setParameter("n", "viraj");
+		// single (unique)
+//		q.uniqueResult();
+
+		// multiple - list
+		List<Student> list = q.list();
+
+		for (Student students : list) {
+			System.out.println(students.getName() + " : " + students.getCity());
+		}
+
+		System.out.println("________________________________________________");
+
+		Transaction tx = s.beginTransaction();
+
+		// delete query
+//		Query q1 = s.createQuery("delete from Student s where s.city=:c");
+//		q1.setParameter("c", "ahmedabad");
+//
+//		int r = q1.executeUpdate();
+//
+//		System.out.println("deleted : " + r);
+
+		Query q2 = s.createQuery("update Student set city=:c where name=:n");
+
+		q2.setParameter("c", "savar");
+		q2.setParameter("n", "aditya");
+
+		int r = q2.executeUpdate();
+		System.out.println(q2 + "rows updated...");
+
+		tx.commit();
+		s.close();
+
+		factory.close();
+	}
+
+}
